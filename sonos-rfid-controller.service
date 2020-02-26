@@ -2,7 +2,7 @@
 Description = Sonos RFID Controller
 
 [Service]
-ExecStart=/usr/bin/python3 /home/pi/MFRC522-python/sonos-rfid-controller.py /home/pi/MFRC522-python/music.json 192.168.1.230 20
+ExecStart=/usr/bin/python3 /home/pi/sonos-rfid-controller/sonos-rfid-controller.py /home/pi/sonos-rfid-controller/music.json 192.168.1.230 20
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
