@@ -1,0 +1,14 @@
+[Unit]
+Description = Sonos RFID Controller
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/MFRC522-python/sonos-rfid-controller.py /home/pi/MFRC522-python/music.json 192.168.1.230 20
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=sonos-rfid-controller
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target
