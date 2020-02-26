@@ -7,6 +7,15 @@ import time
 import sys
 import json
 import soco
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
 
 music_file = sys.argv[1]
 device_ip_address = sys.argv[2]
@@ -14,7 +23,7 @@ device_ip_address = sys.argv[2]
 f = open(music_file, "r")
 music = json.loads(f.read())
 f.close()
-print("Ready")
+logging.info('Ready')
 
 
 continue_reading = True
@@ -23,13 +32,13 @@ continue_reading = True
 def end_read(signal, frame):
     # Capture SIGINT for cleanup when the script is aborted
     global continue_reading
-    print("Ctrl+C captured, ending read.")
+    logging.info("Ctrl+C captured, ending read.")
     continue_reading = False
     GPIO.cleanup()
 
 
 def play_album(album_name, device):
-    print(f"Playing album '{album_name}'")
+    logging.info(f"Playing album '{album_name}'")
     albums = device.music_library.get_albums(
         search_term=album_name, complete_result=True)
 
@@ -39,12 +48,12 @@ def play_album(album_name, device):
 
 
 def play_webradio(title, uri, device):
-    print(f"Playing web radio '{title}'")
+    logging.info(f"Playing web radio '{title}'")
     device.play_uri(title=title, uri=uri, force_radio=True)
 
 
 def stop():
-    print("Stopping playback")
+    logging.info("Stopping playback")
     device.stop()
 
 
@@ -74,7 +83,7 @@ while continue_reading:
 
         if (card != current_card):
             current_card = card
-            print("Card was detected: " + current_card)
+            logging.info("Card was detected: " + current_card)
 
             if current_card in music:
                 music_entry = music[current_card]
@@ -90,6 +99,6 @@ while continue_reading:
     else:
         if (current_card != None):
             current_card = None
-            print("Card was removed")
+            logging.info("Card was removed")
 
             stop()
