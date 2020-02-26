@@ -8,10 +8,10 @@ Controlling Sonos with RFID cards
 
 ```bash
 sudo cp sonos-rfid-controller.service /lib/systemd/system
-sudo chown root:root /lib/systemd/sonos-rfid-controller.service
+sudo chown root:root /lib/systemd/system/sonos-rfid-controller.service
 
 sudo systemctl enable sonos-rfid-controller.service
-sudo systemctl start vsonos-rfid-controller.service
+sudo systemctl start sonos-rfid-controller.service
 ```
 
 3. Watch log
