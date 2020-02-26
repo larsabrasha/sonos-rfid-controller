@@ -53,8 +53,8 @@ def play_webradio(title, uri, device):
 
 
 def stop():
-    logging.info("Stopping playback")
-    device.stop()
+    logging.info("Pausing playback")
+    device.pause()
 
 
 # Connect to Sonos device
