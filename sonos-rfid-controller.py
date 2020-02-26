@@ -10,7 +10,6 @@ import soco
 
 music_file = sys.argv[1]
 device_ip_address = sys.argv[2]
-volume = sys.argv[3]
 
 f = open(music_file, "r")
 music = json.loads(f.read())
@@ -29,20 +28,18 @@ def end_read(signal, frame):
     GPIO.cleanup()
 
 
-def play_album(album_name, device, volume):
+def play_album(album_name, device):
     print(f"Playing album '{album_name}'")
     albums = device.music_library.get_albums(
         search_term=album_name, complete_result=True)
 
     device.clear_queue()
     device.add_multiple_to_queue(albums)
-    device.volume = volume
     device.play_from_queue(0)
 
 
-def play_webradio(title, uri, device, volume):
+def play_webradio(title, uri, device):
     print(f"Playing web radio '{title}'")
-    device.volume = volume
     device.play_uri(title=title, uri=uri, force_radio=True)
 
 
@@ -83,10 +80,10 @@ while continue_reading:
                 music_entry = music[current_card]
 
                 if "album" in music_entry:
-                    play_album(music_entry["album"], device, volume)
+                    play_album(music_entry["album"], device)
                 elif "title" in music_entry and "uri" in music_entry:
                     play_webradio(music_entry["title"],
-                                  music_entry["uri"], device, volume)
+                                  music_entry["uri"], device)
 
         # Scan for cards a second time due to reading will always fail after a successful read
         (status, TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
